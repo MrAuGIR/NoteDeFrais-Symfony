@@ -36,9 +36,15 @@ class GroupVehicleCat
      */
     private $vehicleCategories;
 
+    /**
+     * @ORM\OneToMany(targetEntity=KilometricRange::class, mappedBy="groupVehicleCat")
+     */
+    private $kilometricRanges;
+
     public function __construct()
     {
         $this->vehicleCategories = new ArrayCollection();
+        $this->kilometricRanges = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +100,36 @@ class GroupVehicleCat
             // set the owning side to null (unless already changed)
             if ($vehicleCategory->getGroupVehicle() === $this) {
                 $vehicleCategory->setGroupVehicle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|KilometricRange[]
+     */
+    public function getKilometricRanges(): Collection
+    {
+        return $this->kilometricRanges;
+    }
+
+    public function addKilometricRange(KilometricRange $kilometricRange): self
+    {
+        if (!$this->kilometricRanges->contains($kilometricRange)) {
+            $this->kilometricRanges[] = $kilometricRange;
+            $kilometricRange->setGroupVehicleCat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKilometricRange(KilometricRange $kilometricRange): self
+    {
+        if ($this->kilometricRanges->removeElement($kilometricRange)) {
+            // set the owning side to null (unless already changed)
+            if ($kilometricRange->getGroupVehicleCat() === $this) {
+                $kilometricRange->setGroupVehicleCat(null);
             }
         }
 

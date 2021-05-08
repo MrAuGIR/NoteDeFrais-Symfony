@@ -41,9 +41,15 @@ class VehicleCategory
      */
     private $groupVehicle;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Scale::class, mappedBy="vehicleCategory")
+     */
+    private $scales;
+
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
+        $this->scales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +119,36 @@ class VehicleCategory
     public function setGroupVehicle(?GroupVehicleCat $groupVehicle): self
     {
         $this->groupVehicle = $groupVehicle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Scale[]
+     */
+    public function getScales(): Collection
+    {
+        return $this->scales;
+    }
+
+    public function addScale(Scale $scale): self
+    {
+        if (!$this->scales->contains($scale)) {
+            $this->scales[] = $scale;
+            $scale->setVehicleCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScale(Scale $scale): self
+    {
+        if ($this->scales->removeElement($scale)) {
+            // set the owning side to null (unless already changed)
+            if ($scale->getVehicleCategory() === $this) {
+                $scale->setVehicleCategory(null);
+            }
+        }
 
         return $this;
     }

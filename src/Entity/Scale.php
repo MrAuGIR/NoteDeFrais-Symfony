@@ -27,6 +27,16 @@ class Scale
      */
     private $offset;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=KilometricRange::class)
+     */
+    private $kilometricRange;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=VehicleCategory::class, inversedBy="scales")
+     */
+    private $vehicleCategory;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,30 @@ class Scale
     public function setOffset(int $offset): self
     {
         $this->offset = $offset;
+
+        return $this;
+    }
+
+    public function getKilometricRange(): ?KilometricRange
+    {
+        return $this->kilometricRange;
+    }
+
+    public function setKilometricRange(?KilometricRange $kilometricRange): self
+    {
+        $this->kilometricRange = $kilometricRange;
+
+        return $this;
+    }
+
+    public function getVehicleCategory(): ?VehicleCategory
+    {
+        return $this->vehicleCategory;
+    }
+
+    public function setVehicleCategory(?VehicleCategory $vehicleCategory): self
+    {
+        $this->vehicleCategory = $vehicleCategory;
 
         return $this;
     }

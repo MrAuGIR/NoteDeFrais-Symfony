@@ -32,6 +32,11 @@ class KilometricRange
      */
     private $active;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=GroupVehicleCat::class, inversedBy="kilometricRanges")
+     */
+    private $groupVehicleCat;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class KilometricRange
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getGroupVehicleCat(): ?GroupVehicleCat
+    {
+        return $this->groupVehicleCat;
+    }
+
+    public function setGroupVehicleCat(?GroupVehicleCat $groupVehicleCat): self
+    {
+        $this->groupVehicleCat = $groupVehicleCat;
 
         return $this;
     }
