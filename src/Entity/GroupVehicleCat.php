@@ -3,16 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\VehicleCategoryRepository;
+use App\Repository\GroupVehicleCatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VehicleCategoryRepository::class)
+ * @ORM\Entity(repositoryClass=GroupVehicleCatRepository::class)
  */
 #[ApiResource]
-class VehicleCategory
+class GroupVehicleCat
 {
     /**
      * @ORM\Id
@@ -32,18 +32,13 @@ class VehicleCategory
     private $active;
 
     /**
-     * @ORM\OneToMany(targetEntity=Vehicle::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=VehicleCategory::class, mappedBy="groupVehicle")
      */
-    private $vehicles;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=GroupVehicleCat::class, inversedBy="vehicleCategories")
-     */
-    private $groupVehicle;
+    private $vehicleCategories;
 
     public function __construct()
     {
-        $this->vehicles = new ArrayCollection();
+        $this->vehicleCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,43 +71,31 @@ class VehicleCategory
     }
 
     /**
-     * @return Collection|Vehicle[]
+     * @return Collection|VehicleCategory[]
      */
-    public function getVehicles(): Collection
+    public function getVehicleCategories(): Collection
     {
-        return $this->vehicles;
+        return $this->vehicleCategories;
     }
 
-    public function addVehicle(Vehicle $vehicle): self
+    public function addVehicleCategory(VehicleCategory $vehicleCategory): self
     {
-        if (!$this->vehicles->contains($vehicle)) {
-            $this->vehicles[] = $vehicle;
-            $vehicle->setCategory($this);
+        if (!$this->vehicleCategories->contains($vehicleCategory)) {
+            $this->vehicleCategories[] = $vehicleCategory;
+            $vehicleCategory->setGroupVehicle($this);
         }
 
         return $this;
     }
 
-    public function removeVehicle(Vehicle $vehicle): self
+    public function removeVehicleCategory(VehicleCategory $vehicleCategory): self
     {
-        if ($this->vehicles->removeElement($vehicle)) {
+        if ($this->vehicleCategories->removeElement($vehicleCategory)) {
             // set the owning side to null (unless already changed)
-            if ($vehicle->getCategory() === $this) {
-                $vehicle->setCategory(null);
+            if ($vehicleCategory->getGroupVehicle() === $this) {
+                $vehicleCategory->setGroupVehicle(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getGroupVehicle(): ?GroupVehicleCat
-    {
-        return $this->groupVehicle;
-    }
-
-    public function setGroupVehicle(?GroupVehicleCat $groupVehicle): self
-    {
-        $this->groupVehicle = $groupVehicle;
 
         return $this;
     }
