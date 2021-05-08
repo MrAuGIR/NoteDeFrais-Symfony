@@ -79,6 +79,12 @@ class Expense
      */
     private $type;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ExpenseReport::class, inversedBy="expenses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $expenseReport;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -224,6 +230,18 @@ class Expense
     public function setType(?ExpenseType $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getExpenseReport(): ?ExpenseReport
+    {
+        return $this->expenseReport;
+    }
+
+    public function setExpenseReport(?ExpenseReport $expenseReport): self
+    {
+        $this->expenseReport = $expenseReport;
 
         return $this;
     }
