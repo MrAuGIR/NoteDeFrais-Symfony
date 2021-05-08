@@ -81,6 +81,17 @@ class ExpenseReport
      */
     private $expenses;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="expenseReports")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $supervisor;
+
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
@@ -249,6 +260,30 @@ class ExpenseReport
                 $expense->setExpenseReport(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getSupervisor(): ?User
+    {
+        return $this->supervisor;
+    }
+
+    public function setSupervisor(?User $supervisor): self
+    {
+        $this->supervisor = $supervisor;
 
         return $this;
     }
