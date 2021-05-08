@@ -44,6 +44,11 @@ class Vehicle
      */
     private $DistanceLastYear;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=VehicleCategory::class, inversedBy="vehicles")
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class Vehicle
     public function setDistanceLastYear(?int $DistanceLastYear): self
     {
         $this->DistanceLastYear = $DistanceLastYear;
+
+        return $this;
+    }
+
+    public function getCategory(): ?VehicleCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?VehicleCategory $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
