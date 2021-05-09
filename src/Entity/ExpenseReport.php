@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\Entity(repositoryClass=ExpenseReportRepository::class)
@@ -35,7 +36,9 @@ class ExpenseReport
     /**
      * @ORM\Column(type="string", length=100)
      */
-    #[Groups(['read:ExpenseReports'])]
+    #[Groups(['read:ExpenseReports']),
+        Length(min:4)
+    ]
     private $reference;
 
     /**
@@ -117,6 +120,7 @@ class ExpenseReport
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
