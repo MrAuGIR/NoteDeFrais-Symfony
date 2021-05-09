@@ -7,11 +7,21 @@ use App\Repository\ExpenseReportRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ExpenseReportRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: [
+        'groups' => ['read:ExpenseReports']
+    ],
+    itemOperations: [
+        'put'=> ['denormalization_context' => ['groups' => ['put:ExpenseReport']]],
+        'delete',
+        'get' => ['normalization_context'=> ['groups'=>['read:ExpenseReport', 'read:ExpenseReports']]]
+        ]
+)]
 class ExpenseReport
 {
     /**
@@ -19,26 +29,31 @@ class ExpenseReport
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:ExpenseReports'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
+    #[Groups(['read:ExpenseReports'])]
     private $reference;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:ExpenseReports'])]
     private $status;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[Groups(['read:ExpenseReports', 'put:ExpenseReport'])]
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[Groups(['read:ExpenseReport', 'put:ExpenseReport'])]
     private $supervisorComment;
 
     /**
@@ -54,37 +69,44 @@ class ExpenseReport
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(['read:ExpenseReports', 'put:ExpenseReport'])]
     private $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    #[Groups(['read:ExpenseReports', 'put:ExpenseReport'])]
     private $endedAt;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
+    #[Groups(['read:ExpenseReport', 'put:ExpenseReport'])]
     private $totalHt;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
+    #[Groups(['read:ExpenseReports', 'put:ExpenseReport'])]
     private $totalTtc;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
+    #[Groups(['read:ExpenseReport'])]
     private $totalTva;
 
     /**
      * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="expenseReport", orphanRemoval=true)
      */
+    #[Groups(['read:ExpenseReport'])]
     private $expenses;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="expenseReports")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['read:ExpenseReports'])]
     private $author;
 
     /**

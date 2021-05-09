@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ExpenseRepository::class)
@@ -17,6 +18,7 @@ class Expense
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:ExpenseReport'])]
     private $id;
 
     /**
@@ -37,6 +39,7 @@ class Expense
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[Groups(['read:ExpenseReport'])]
     private $description;
 
     /**
