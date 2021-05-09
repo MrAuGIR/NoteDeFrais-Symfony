@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\KilometricRangeRepository;
+use App\Repository\TaxHorsePowerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=KilometricRangeRepository::class)
+ * @ORM\Entity(repositoryClass=TaxHorsePowerRepository::class)
  */
 #[ApiResource]
-class KilometricRange
+class TaxHorsePower
 {
     /**
      * @ORM\Id
@@ -20,14 +20,14 @@ class KilometricRange
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=6)
      */
-    private $min;
+    private $code;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
-    private $max;
+    private $label;
 
     /**
      * @ORM\Column(type="boolean")
@@ -39,26 +39,26 @@ class KilometricRange
         return $this->id;
     }
 
-    public function getMin(): ?int
+    public function getCode(): ?string
     {
-        return $this->min;
+        return $this->code;
     }
 
-    public function setMin(int $min): self
+    public function setCode(string $code): self
     {
-        $this->min = $min;
+        $this->code = $code;
 
         return $this;
     }
 
-    public function getMax(): ?int
+    public function getLabel(): ?string
     {
-        return $this->max;
+        return $this->label;
     }
 
-    public function setMax(int $max): self
+    public function setLabel(string $label): self
     {
-        $this->max = $max;
+        $this->label = $label;
 
         return $this;
     }

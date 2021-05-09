@@ -37,23 +37,17 @@ class Vehicle
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $distanceCurrYear;
+    private $distanceCurrYer;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $DistanceLastYear;
+    private $distanceLastYear;
 
     /**
-     * @ORM\ManyToOne(targetEntity=VehicleCategory::class, inversedBy="vehicles")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="vehicles")
      */
     private $category;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="vehicles")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     public function getId(): ?int
     {
@@ -96,50 +90,38 @@ class Vehicle
         return $this;
     }
 
-    public function getDistanceCurrYear(): ?int
+    public function getDistanceCurrYer(): ?int
     {
-        return $this->distanceCurrYear;
+        return $this->distanceCurrYer;
     }
 
-    public function setDistanceCurrYear(?int $distanceCurrYear): self
+    public function setDistanceCurrYer(?int $distanceCurrYer): self
     {
-        $this->distanceCurrYear = $distanceCurrYear;
+        $this->distanceCurrYer = $distanceCurrYer;
 
         return $this;
     }
 
     public function getDistanceLastYear(): ?int
     {
-        return $this->DistanceLastYear;
+        return $this->distanceLastYear;
     }
 
-    public function setDistanceLastYear(?int $DistanceLastYear): self
+    public function setDistanceLastYear(?int $distanceLastYear): self
     {
-        $this->DistanceLastYear = $DistanceLastYear;
+        $this->distanceLastYear = $distanceLastYear;
 
         return $this;
     }
 
-    public function getCategory(): ?VehicleCategory
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?VehicleCategory $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

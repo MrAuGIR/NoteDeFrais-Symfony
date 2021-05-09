@@ -3,16 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ExpenseTypeRepository;
+use App\Repository\TypeVehicleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ExpenseTypeRepository::class)
+ * @ORM\Entity(repositoryClass=TypeVehicleRepository::class)
  */
 #[ApiResource]
-class ExpenseType
+class TypeVehicle
 {
     /**
      * @ORM\Id
@@ -27,7 +27,7 @@ class ExpenseType
     private $code;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=155)
      */
     private $label;
 
@@ -37,13 +37,13 @@ class ExpenseType
     private $active;
 
     /**
-     * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="type")
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="typeVehicle")
      */
-    private $expenses;
+    private $categories;
 
     public function __construct()
     {
-        $this->expenses = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,29 +88,29 @@ class ExpenseType
     }
 
     /**
-     * @return Collection|Expense[]
+     * @return Collection|Category[]
      */
-    public function getExpenses(): Collection
+    public function getCategories(): Collection
     {
-        return $this->expenses;
+        return $this->categories;
     }
 
-    public function addExpense(Expense $expense): self
+    public function addCategory(Category $category): self
     {
-        if (!$this->expenses->contains($expense)) {
-            $this->expenses[] = $expense;
-            $expense->setType($this);
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setTypeVehicle($this);
         }
 
         return $this;
     }
 
-    public function removeExpense(Expense $expense): self
+    public function removeCategory(Category $category): self
     {
-        if ($this->expenses->removeElement($expense)) {
+        if ($this->categories->removeElement($category)) {
             // set the owning side to null (unless already changed)
-            if ($expense->getType() === $this) {
-                $expense->setType(null);
+            if ($category->getTypeVehicle() === $this) {
+                $category->setTypeVehicle(null);
             }
         }
 

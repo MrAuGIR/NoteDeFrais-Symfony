@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ScaleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ScaleRepository::class)
  */
+#[ApiResource]
 class Scale
 {
     /**
@@ -28,14 +30,20 @@ class Scale
     private $offset;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
      * @ORM\ManyToOne(targetEntity=KilometricRange::class)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $kilometricRange;
 
     /**
-     * @ORM\ManyToOne(targetEntity=VehicleCategory::class, inversedBy="scales")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="scales")
      */
-    private $vehicleCategory;
+    private $category;
 
     public function getId(): ?int
     {
@@ -66,6 +74,18 @@ class Scale
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function getKilometricRange(): ?KilometricRange
     {
         return $this->kilometricRange;
@@ -78,14 +98,14 @@ class Scale
         return $this;
     }
 
-    public function getVehicleCategory(): ?VehicleCategory
+    public function getCategory(): ?Category
     {
-        return $this->vehicleCategory;
+        return $this->category;
     }
 
-    public function setVehicleCategory(?VehicleCategory $vehicleCategory): self
+    public function setCategory(?Category $category): self
     {
-        $this->vehicleCategory = $vehicleCategory;
+        $this->category = $category;
 
         return $this;
     }
