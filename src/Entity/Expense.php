@@ -86,6 +86,12 @@ class Expense
      */
     private $tva;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ExpenseReport::class, inversedBy="expenses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $expenseReport;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -266,6 +272,18 @@ class Expense
     public function setTva(?Tva $tva): self
     {
         $this->tva = $tva;
+
+        return $this;
+    }
+
+    public function getExpenseReport(): ?ExpenseReport
+    {
+        return $this->expenseReport;
+    }
+
+    public function setExpenseReport(?ExpenseReport $expenseReport): self
+    {
+        $this->expenseReport = $expenseReport;
 
         return $this;
     }

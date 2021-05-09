@@ -46,9 +46,15 @@ class User implements UserInterface
      */
     private $vehicles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ExpenseReport::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $expenseReports;
+
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
+        $this->expenseReports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,6 +174,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($vehicle->getUser() === $this) {
                 $vehicle->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ExpenseReport[]
+     */
+    public function getExpenseReports(): Collection
+    {
+        return $this->expenseReports;
+    }
+
+    public function addExpenseReport(ExpenseReport $expenseReport): self
+    {
+        if (!$this->expenseReports->contains($expenseReport)) {
+            $this->expenseReports[] = $expenseReport;
+            $expenseReport->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpenseReport(ExpenseReport $expenseReport): self
+    {
+        if ($this->expenseReports->removeElement($expenseReport)) {
+            // set the owning side to null (unless already changed)
+            if ($expenseReport->getAuthor() === $this) {
+                $expenseReport->setAuthor(null);
             }
         }
 

@@ -42,6 +42,12 @@ class Transfer
      */
     private $paymentType;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ExpenseReport::class, inversedBy="transfers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $expenseReport;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +109,18 @@ class Transfer
     public function setPaymentType(?PaymentType $paymentType): self
     {
         $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    public function getExpenseReport(): ?ExpenseReport
+    {
+        return $this->expenseReport;
+    }
+
+    public function setExpenseReport(?ExpenseReport $expenseReport): self
+    {
+        $this->expenseReport = $expenseReport;
 
         return $this;
     }
