@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -19,18 +20,21 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['vehicles_read'])]
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=TaxHorsePower::class)
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['vehicles_read'])]
     private $taxHorsePower;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeVehicle::class, inversedBy="categories")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['vehicles_read'])]
     private $typeVehicle;
 
     /**

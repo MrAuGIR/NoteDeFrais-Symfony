@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TaxHorsePowerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TaxHorsePowerRepository::class)
@@ -27,6 +28,7 @@ class TaxHorsePower
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['vehicles_read'])]
     private $label;
 
     /**

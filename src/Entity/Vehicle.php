@@ -5,11 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=VehicleRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:['groups' => ['vehicles_read']],
+)]
 class Vehicle
 {
     /**
@@ -17,36 +20,43 @@ class Vehicle
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['vehicles_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
+    #[Groups(['vehicles_read'])]
     private $imma;
 
     /**
      * @ORM\Column(type="string", length=155, nullable=true)
      */
+    #[Groups(['vehicles_read'])]
     private $model;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[Groups(['item_vehicle_read'])]
     private $totalDistance;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[Groups(['item_vehicle_read'])]
     private $distanceCurrYer;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[Groups(['item_vehicle_read'])]
     private $distanceLastYear;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="vehicles")
      */
+    #[Groups(['vehicles_read'])]
     private $category;
 
     /**
