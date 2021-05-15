@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ScaleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @ORM\Entity(repositoryClass=ScaleRepository::class)
@@ -22,11 +24,15 @@ class Scale
     /**
      * @ORM\Column(type="float")
      */
+    #[NotBlank(['message' => "Coefficiant kilometrique obligatoire"])]
+    #[Type(["type" => "numeric", "message" => "Le coefficiant doit être de type numérique"])]
     private $coef;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[NotBlank(['message' => "Offset kilometrique obligatoire"])]
+    #[Type(["type" => "numeric", "message" => "L'offset' doit être de type numérique"])]
     private $offset;
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +13,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
+#[ApiResource(
+    subresourceOperations:[
+        'vehicles_get_subresource' => [
+            'path' => '/users/{id}/vehicles'
+        ]
+    ]
+)]
 class User implements UserInterface
 {
     /**
@@ -44,6 +53,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity=Vehicle::class, mappedBy="user", orphanRemoval=true)
      */
+    #[ApiSubresource()]
     private $vehicles;
 
     /**
