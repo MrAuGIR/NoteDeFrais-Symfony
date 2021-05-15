@@ -7,11 +7,23 @@ use App\Repository\ExpenseReportRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ExpenseReportRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['expenses_report_read']],
+    collectionOperations:[
+        'get',
+        'post'
+    ],
+    subresourceOperations:[
+        'expenses_get_subresource' => [
+            'path' => "/customers/{id}/expenses"
+        ]
+    ]
+)]
 class ExpenseReport
 {
     /**
@@ -19,36 +31,43 @@ class ExpenseReport
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['expenses_report_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
+    #[Groups(['expenses_report_read'])]
     private $reference;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(['expenses_report_read'])]
     private $status;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[Groups(['expenses_report_read'])]
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[Groups(['expenses_report_read'])]
     private $supervisorComment;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(['expenses_report_read'])]
     private $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    #[Groups(['expenses_report_read'])]
     private $endedAt;
 
     /**
@@ -59,16 +78,19 @@ class ExpenseReport
     /**
      * @ORM\Column(type="float", nullable=true)
      */
+    #[Groups(['expenses_report_read'])]
     private $totalTva;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
+    #[Groups(['expenses_report_read'])]
     private $totalTtc;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
+    #[Groups(['expenses_report_read'])]
     private $totalHt;
 
     /**
@@ -89,6 +111,7 @@ class ExpenseReport
     /**
      * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="expenseReport", orphanRemoval=true)
      */
+    #[Groups(['expenses_report_read'])]
     private $expenses;
 
     /**
@@ -100,6 +123,7 @@ class ExpenseReport
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="expenseReports")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['expenses_report_read'])]
     private $author;
 
     /**
