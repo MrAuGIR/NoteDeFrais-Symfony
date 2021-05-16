@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\KilometricRangeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=KilometricRangeRepository::class)
@@ -17,16 +18,19 @@ class KilometricRange
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['categories_read', 'scales_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(['categories_read', 'scales_read'])]
     private $min;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(['categories_read', 'scales_read'])]
     private $max;
 
     /**

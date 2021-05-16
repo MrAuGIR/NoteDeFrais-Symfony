@@ -13,7 +13,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:[
+        'groups' => ['categories_read']
+    ]
+)]
 class Category
 {
     /**
@@ -21,27 +25,27 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['vehicle_read'])]
+    #[Groups(['vehicle_read', 'scales_read', 'categories_read'])]
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=TaxHorsePower::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups(['vehicle_read'])]
+    #[Groups(['vehicle_read', 'scales_read', 'categories_read'])]
     private $taxHorsePower;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeVehicle::class, inversedBy="categories")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups(['vehicle_read'])]
+    #[Groups(['vehicle_read', 'scales_read', 'categories_read'])]
     private $typeVehicle;
 
     /**
      * @ORM\OneToMany(targetEntity=Scale::class, mappedBy="category")
      */
-    #[Groups(['vehicle_read'])]
+    #[Groups(['vehicle_read', 'categories_read'])]
     private $scales;
 
     /**

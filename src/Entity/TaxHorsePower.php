@@ -10,7 +10,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=TaxHorsePowerRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:['groups' => ['read:taxHorsePower']]
+)]
 class TaxHorsePower
 {
     /**
@@ -18,22 +20,25 @@ class TaxHorsePower
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:taxHorsePower', 'scales_read', 'categories_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=6)
      */
+    #[Groups(['read:taxHorsePower', 'scales_read', 'categories_read'])]
     private $code;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['vehicles_read'])]
+    #[Groups(['vehicles_read', 'read:taxHorsePower', 'scales_read', 'categories_read'])]
     private $label;
 
     /**
      * @ORM\Column(type="boolean")
      */
+    #[Groups(['read:taxHorsePower', 'read:taxHorsePower', 'scales_read'])]
     private $active;
 
     public function getId(): ?int

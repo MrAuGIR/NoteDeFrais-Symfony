@@ -12,7 +12,9 @@ use Symfony\Component\Validator\Constraints\Type;
 /**
  * @ORM\Entity(repositoryClass=ScaleRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext:['groups' => ['scales_read']]
+)]
 class Scale
 {
     /**
@@ -20,39 +22,42 @@ class Scale
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['vehicle_read'])]
+    #[Groups(['vehicle_read', 'scales_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="float")
      */
+    #[Groups(['vehicle_read', 'scales_read', 'categories_read'])]
     #[NotBlank(['message' => "Coefficiant kilometrique obligatoire"])]
     #[Type(["type" => "numeric", "message" => "Le coefficiant doit être de type numérique"])]
-    #[Groups(['vehicle_read'])]
     private $coef;
 
     /**
      * @ORM\Column(type="integer")
      */
-    #[NotBlank(['message' => "Offset kilometrique obligatoire"])]
+    #[Groups(['vehicle_read', 'scales_read', 'categories_read'])]
     #[Type(["type" => "numeric", "message" => "L'offset' doit être de type numérique"])]
-    #[Groups(['vehicle_read'])]
+    #[NotBlank(['message' => "Offset kilometrique obligatoire"])]
     private $offset;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[Groups(['scales_read'])]
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=KilometricRange::class)
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['scales_read', 'categories_read'])]
     private $kilometricRange;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="scales")
      */
+    #[Groups(['scales_read'])]
     private $category;
 
     public function getId(): ?int

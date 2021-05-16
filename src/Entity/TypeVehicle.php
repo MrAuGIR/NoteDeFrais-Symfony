@@ -20,16 +20,19 @@ class TypeVehicle
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['scales_read', 'categories_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=6)
      */
+    #[Groups(['scales_read', 'categories_read'])]
     private $code;
 
     /**
      * @ORM\Column(type="string", length=155)
      */
+    #[Groups(['scales_read', 'categories_read'])]
     private $label;
 
     /**
