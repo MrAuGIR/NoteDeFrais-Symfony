@@ -22,7 +22,7 @@ class Scale
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['vehicle_read', 'scales_read'])]
+    #[Groups(['vehicle_read', 'scales_read', 'categories_read'])]
     private $id;
 
     /**

@@ -93,6 +93,8 @@ const CategoriesPage = (props) => {
                                 <th scope="col">#</th>
                                 <th scope="col">Type de vehicule</th>
                                 <th scope="col">puissance fiscale</th>
+                                <th scope="col">coefficiants</th>
+                                <th scope="col">Kilometrque range</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,6 +103,10 @@ const CategoriesPage = (props) => {
                                     <td>{category.id}</td>
                                     <td>{category.typeVehicle.label}</td>
                                     <td>{category.taxHorsePower.label}</td>
+                                    <td>{category.scales.map(scale => <li key={scale.id}>{scale.coef}</li>)}</td>
+                                    <td>{category.scales.map(scale => 
+                                        <li key={scale.kilometricRange.id}>{scale.kilometricRange.min} - {scale.kilometricRange.max}</li>)}
+                                    </td>
                                 </tr>
                             )}
                         </tbody>
