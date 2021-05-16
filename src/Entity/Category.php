@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,26 +21,27 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['vehicles_read'])]
+    #[Groups(['vehicle_read'])]
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=TaxHorsePower::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups(['vehicles_read'])]
+    #[Groups(['vehicle_read'])]
     private $taxHorsePower;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeVehicle::class, inversedBy="categories")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups(['vehicles_read'])]
+    #[Groups(['vehicle_read'])]
     private $typeVehicle;
 
     /**
      * @ORM\OneToMany(targetEntity=Scale::class, mappedBy="category")
      */
+    #[Groups(['vehicle_read'])]
     private $scales;
 
     /**

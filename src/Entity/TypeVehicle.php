@@ -30,7 +30,6 @@ class TypeVehicle
     /**
      * @ORM\Column(type="string", length=155)
      */
-    #[Groups(['vehicles_read'])]
     private $label;
 
     /**

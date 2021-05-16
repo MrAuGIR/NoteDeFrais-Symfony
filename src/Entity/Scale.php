@@ -5,13 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ScaleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @ORM\Entity(repositoryClass=ScaleRepository::class)
  */
-#[ApiResource]
+#[ApiResource()]
 class Scale
 {
     /**
@@ -19,6 +20,7 @@ class Scale
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['vehicle_read'])]
     private $id;
 
     /**
@@ -26,6 +28,7 @@ class Scale
      */
     #[NotBlank(['message' => "Coefficiant kilometrique obligatoire"])]
     #[Type(["type" => "numeric", "message" => "Le coefficiant doit être de type numérique"])]
+    #[Groups(['vehicle_read'])]
     private $coef;
 
     /**
@@ -33,6 +36,7 @@ class Scale
      */
     #[NotBlank(['message' => "Offset kilometrique obligatoire"])]
     #[Type(["type" => "numeric", "message" => "L'offset' doit être de type numérique"])]
+    #[Groups(['vehicle_read'])]
     private $offset;
 
     /**

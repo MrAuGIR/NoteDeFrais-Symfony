@@ -16,13 +16,14 @@ use Symfony\Component\Validator\Constraints\NotNull;
     normalizationContext:['groups' => ['vehicles_read']],
     itemOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['vehicles_read', 'item_vehicle_read']]
+            'normalization_context' => ['groups' => ['vehicles_read', 'item_vehicle_read', 'vehicle_read']]
         ],
         'put',
         'delete'
     ],
     collectionOperations:[
-        'post'
+        'post',
+        'get'
     ],
     subresourceOperations:[
         'api_users_vehicles_get_subresource' => [
@@ -74,7 +75,7 @@ class Vehicle
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="vehicles")
      */
-    #[Groups(['vehicles_read', 'vehicles_subresource'])]
+    #[Groups(['item_vehicle_read', 'vehicles_subresource'])]
     #[NotNull(['message' => "Catégorie du véhcule obligatoire"])]
     private $category;
 

@@ -18,9 +18,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get',
         'post'
     ],
-    subresourceOperations:[
-        'expenses_get_subresource' => [
-            'path' => "/customers/{id}/expenses"
+    itemOperations:[
+        'get' => ['groups' => ['expenses_report_read','item_expReport_read']],
+        'put',
+        'delete'
+    ],
+    subresourceOperations: [
+        'api_users_expenseReports_get_subresource' => [
+            'normalization_context' => ['groups' => ['expenses_report_read','expenseReports_subresource']]
         ]
     ]
 )]
@@ -96,11 +101,13 @@ class ExpenseReport
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(['item_expReport_read', 'expenseReports_subresource'])]
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    #[Groups(['item_expReport_read', 'expenseReports_subresource'])]
     private $validateAt;
 
     /**
@@ -111,7 +118,7 @@ class ExpenseReport
     /**
      * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="expenseReport", orphanRemoval=true)
      */
-    #[Groups(['expenses_report_read'])]
+    #[Groups(['item_expReport_read'])]
     private $expenses;
 
     /**
@@ -129,6 +136,7 @@ class ExpenseReport
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      */
+    #[Groups(['item_expReport_read','expenseReports_subresource'])]
     private $validator;
 
     public function __construct()

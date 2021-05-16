@@ -18,6 +18,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     subresourceOperations:[
         'vehicles_get_subresource' => [
             'path' => '/users/{id}/vehicles'
+        ],
+        'expenseReport_get_subresoirce' => [
+            'path' => 'users/{id}/expense_reports'
         ]
     ],
     normalizationContext:['groups'=> ['users_read']]
@@ -64,6 +67,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity=ExpenseReport::class, mappedBy="author", orphanRemoval=true)
      */
+    #[ApiSubresource()]
     private $expenseReports;
 
     /**

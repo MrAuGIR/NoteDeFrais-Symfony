@@ -10,6 +10,8 @@ use App\Entity\Expense;
 use App\Entity\TypeVehicle;
 use App\Entity\ExpenseReport;
 use App\Entity\ExpenseType;
+use App\Entity\KilometricRange;
+use App\Entity\Scale;
 use App\Entity\TaxHorsePower;
 use App\Entity\Tva;
 use Doctrine\Persistence\ObjectManager;
@@ -87,6 +89,28 @@ class AppFixtures extends Fixture
             $category = (new Category())->setTaxHorsePower($tabHorse[$random])->setTypeVehicle($tabType[$random2]);
             $tabCat[] = $category;
             $manager->persist($category);
+        }
+
+        //creation des range kilometrique
+        $tabKm=[];
+        for($ra = 0 ; $ra < 6; $ra++)
+        {
+            $min = 0;
+            $max = $min + 2000;
+            $range = (new KilometricRange())->setMin($min)->setMax($max)->setActive(true);
+            $tabKm[] = $range;
+            $manager->persist($range);
+            $min = $max +1;
+        }
+
+        //creation des scale kiloemtrique
+        for($sc = 0 ; $sc < 6; $sc++){
+            
+            for($j = 0; $j<3; $j++){
+                $scale = (new Scale())->setCategory($tabCat[$sc])->setKilometricRange($tabKm[$j])->setCoef(0.563)->setOffset(1500);
+                $manager->persist($scale);
+            }
+            
         }
         
 
