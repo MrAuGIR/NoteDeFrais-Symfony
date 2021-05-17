@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tva{% endblock %}
+
+{% block body %}
+    <h1>Tva</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tva.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ tva.code }}</td>
+            </tr>
+            <tr>
+                <th>Taux</th>
+                <td>{{ tva.taux }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ tva.note }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ tva.active ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('tva_index') }}">back to list</a>
+
+    <a href="{{ path('tva_edit', {'id': tva.id}) }}">edit</a>
+
+    {{ include('tva/_delete_form.html.twig') }}
+{% endblock %}

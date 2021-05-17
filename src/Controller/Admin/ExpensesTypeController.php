@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\ExpenseType;
 use App\Form\ExpenseTypeType;
+use App\Repository\CategoryRepository;
 use App\Repository\ExpenseRepository;
 use App\Repository\ExpenseTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -93,8 +94,19 @@ class ExpensesTypeController extends AbstractController
     }
 
     #[Route('/admin/expenseType/{id}/delete', name: "admin_exp_type_delete")]
-    public function delete(ExpenseType $expType)
+    public function delete(ExpenseType $expType, ExpenseRepository $expenseRepository)
     {
-        
+        $expenses = $expenseRepository->findBy(['expenseType' => $expType]);
+
+        if($expenses){
+            $this->addFlash('danger','le type de dépense ne peut pas être modifié car encore utilisé');
+            return $this->redirectToRoute('admin_exp_type');
+        }
+
+        $this->em->remove($expType);
+        $this->em->flush();
+
+        $this->addFlash('success', "Type de dépense supprimé");
+        return $this->redirectToRoute('admin_exp_type');
     }
 }
