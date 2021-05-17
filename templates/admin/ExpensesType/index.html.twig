@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+<div class="row"></div>
+    <div class="col-12">
+        <a href="{{ path('admin_exp_type_new')}}" >Ajouter</a>
+    </div>
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>label</th>
+                    <th>Taux tva</th>
+                    <th>active</th>
+                    <th>actions</th>
+                </tr>
+            
+            </thead>
+            <tbody>
+            {% for expType in expTypes %}
+                <tr>
+                    <td>{{expType.code}}</td>
+                    <td>{{expType.label}}</td>
+                    <td>{{expType.tva.taux}}</td>
+                    <td>{{expType.active}}</td>
+                    <td>
+                        <a href="{{ path('admin_exp_type_edit',{id:expType.id}) }}">Editer</a>
+                        <a href="{{ path('admin_exp_type_delete',{id:expType.id}) }}">Supprimer</a>
+                </tr>
+            {% endfor %}
+
+
+            <tbody>
+        
+        
+        </table>
+    
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+    
+    </div>
+</div>
+
+{% endblock %}

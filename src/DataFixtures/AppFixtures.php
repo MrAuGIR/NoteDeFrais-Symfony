@@ -51,16 +51,16 @@ class AppFixtures extends Fixture
         $manager->persist($tva4);
 
         //creation des types de depense
-        $typeExp1 = (new ExpenseType())->setCode('EX_FLI')->setLabel('Avion')->setTva($tva)->setActive(true);
+        $typeExp1 = (new ExpenseType())->setCode('EXFLI')->setLabel('Avion')->setTva($tva)->setActive(true);
         $tabExp[] = $typeExp1;
         $manager->persist($typeExp1);
-        $typeExp2 = (new ExpenseType())->setCode('EX_RES')->setLabel('Restaurant')->setTva($tva2)->setActive(true);
+        $typeExp2 = (new ExpenseType())->setCode('EXRES')->setLabel('Restaurant')->setTva($tva2)->setActive(true);
         $tabExp[] = $typeExp2;
         $manager->persist($typeExp2);
-        $typeExp3 = (new ExpenseType())->setCode('EX_FUEL')->setLabel('essence')->setTva($tva3)->setActive(true);
+        $typeExp3 = (new ExpenseType())->setCode('EXFUEL')->setLabel('essence')->setTva($tva3)->setActive(true);
         $tabExp[] = $typeExp3;
         $manager->persist($typeExp3);
-        $typeExp4 = (new ExpenseType())->setCode('EX_KM')->setLabel('Frais kilometrique')->setTva($tva4)->setActive(true);
+        $typeExp4 = (new ExpenseType())->setCode('EXKM')->setLabel('Frais kilometrique')->setTva($tva4)->setActive(true);
         $tabExp[] = $typeExp4;
         $manager->persist($typeExp4);
 
@@ -116,7 +116,8 @@ class AppFixtures extends Fixture
 
         // creation des utilisateur
         for($u = 0; $u<20; $u++){
-            $user = (new User())->setEmail($faker->email)->setPassword($this->encoder->encodePassword($user,'password'));
+            $user = (new User())->setEmail($faker->email)->setPassword($this->encoder->encodePassword($user,'password'))
+            ->setFirstName($faker->firstName())->setLastName($faker->lastName);
             $manager->persist($user);
 
             //creation des vehicule pour chaque utilisateur
