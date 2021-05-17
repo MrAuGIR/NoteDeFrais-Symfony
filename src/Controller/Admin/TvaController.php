@@ -45,7 +45,10 @@ class TvaController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'tva_show', methods: ['GET'])]
+    //#[Route('/{id}', name: 'tva_show', methods: ['GET'])]
+    /**
+     * @Route("/{id}", name="tva_show")
+     */
     public function show(Tva $tva): Response
     {
         return $this->render('admin/tva/show.html.twig', [
